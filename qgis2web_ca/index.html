@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        #map {
+            width: 1338px;
+            height: 1203px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/TNCPrioritizationAreas_1.js"></script>
+        <script src="data/TNCOwnedLandsinCalifornia_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[27.987180985464384,-132.28900700700927],[48.28763916780791,-103.23476197470677]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'feet',
+            secondaryLengthUnit: 'miles',
+            primaryAreaUnit: 'sqfeet',
+            secondaryAreaUnit: 'sqmiles'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_OpenStreetMap_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        function pop_TNCPrioritizationAreas_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TNCID'] !== null ? Autolinker.link(String(feature.properties['TNCID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Functional_Level'] !== null ? Autolinker.link(String(feature.properties['Functional_Level'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Habitat_Integration'] !== null ? Autolinker.link(String(feature.properties['Habitat_Integration'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Notes'] !== null ? Autolinker.link(String(feature.properties['Notes'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Ecoregional_Assessment_Area_Name'] !== null ? Autolinker.link(String(feature.properties['Ecoregional_Assessment_Area_Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Ecoregional_Assessment_Area_ID'] !== null ? Autolinker.link(String(feature.properties['Ecoregional_Assessment_Area_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EAST'] !== null ? Autolinker.link(String(feature.properties['EAST'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Length'] !== null ? Autolinker.link(String(feature.properties['SHAPE_Length'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? Autolinker.link(String(feature.properties['SHAPE_Area'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name1'] !== null ? Autolinker.link(String(feature.properties['Name1'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TNCPrioritizationAreas_1_0() {
+            return {
+                pane: 'pane_TNCPrioritizationAreas_1',
+                opacity: 1,
+                color: 'rgba(133,153,42,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,153,42,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TNCPrioritizationAreas_1');
+        map.getPane('pane_TNCPrioritizationAreas_1').style.zIndex = 401;
+        map.getPane('pane_TNCPrioritizationAreas_1').style['mix-blend-mode'] = 'normal';
+        var layer_TNCPrioritizationAreas_1 = new L.geoJson(json_TNCPrioritizationAreas_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TNCPrioritizationAreas_1',
+            layerName: 'layer_TNCPrioritizationAreas_1',
+            pane: 'pane_TNCPrioritizationAreas_1',
+            onEachFeature: pop_TNCPrioritizationAreas_1,
+            style: style_TNCPrioritizationAreas_1_0,
+        });
+        bounds_group.addLayer(layer_TNCPrioritizationAreas_1);
+        map.addLayer(layer_TNCPrioritizationAreas_1);
+        function pop_TNCOwnedLandsinCalifornia_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STATE'] !== null ? Autolinker.link(String(feature.properties['STATE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AREANAM'] !== null ? Autolinker.link(String(feature.properties['AREANAM'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GAPCAT'] !== null ? Autolinker.link(String(feature.properties['GAPCAT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROTHOLD'] !== null ? Autolinker.link(String(feature.properties['PROTHOLD'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROTMECH'] !== null ? Autolinker.link(String(feature.properties['PROTMECH'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SENSDATA'] !== null ? Autolinker.link(String(feature.properties['SENSDATA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TR_IFMS_ID'] !== null ? Autolinker.link(String(feature.properties['TR_IFMS_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MA_IFMS_ID'] !== null ? Autolinker.link(String(feature.properties['MA_IFMS_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TR_LRM_ID'] !== null ? Autolinker.link(String(feature.properties['TR_LRM_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MA_LRM_ID'] !== null ? Autolinker.link(String(feature.properties['MA_LRM_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLS_ACRES'] !== null ? Autolinker.link(String(feature.properties['CLS_ACRES'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLSTRANSDA'] !== null ? Autolinker.link(String(feature.properties['CLSTRANSDA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? Autolinker.link(String(feature.properties['Shape_Leng'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TNCOwnedLandsinCalifornia_2_0(feature) {
+            switch(String(feature.properties['PROTMECH'])) {
+                case 'Conservation Easement':
+                    return {
+                pane: 'pane_TNCOwnedLandsinCalifornia_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,25,28,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Deed Restrictions':
+                    return {
+                pane: 'pane_TNCOwnedLandsinCalifornia_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,201,128,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Fee Ownership':
+                    return {
+                pane: 'pane_TNCOwnedLandsinCalifornia_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(199,233,173,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_TNCOwnedLandsinCalifornia_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(43,131,186,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_TNCOwnedLandsinCalifornia_2');
+        map.getPane('pane_TNCOwnedLandsinCalifornia_2').style.zIndex = 402;
+        map.getPane('pane_TNCOwnedLandsinCalifornia_2').style['mix-blend-mode'] = 'normal';
+        var layer_TNCOwnedLandsinCalifornia_2 = new L.geoJson(json_TNCOwnedLandsinCalifornia_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TNCOwnedLandsinCalifornia_2',
+            layerName: 'layer_TNCOwnedLandsinCalifornia_2',
+            pane: 'pane_TNCOwnedLandsinCalifornia_2',
+            onEachFeature: pop_TNCOwnedLandsinCalifornia_2,
+            style: style_TNCOwnedLandsinCalifornia_2_0,
+        });
+        bounds_group.addLayer(layer_TNCOwnedLandsinCalifornia_2);
+        map.addLayer(layer_TNCOwnedLandsinCalifornia_2);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'TNC Owned Lands in California<br /><table><tr><td style="text-align: center;"><img src="legend/TNCOwnedLandsinCalifornia_2_ConservationEasement0.png" /></td><td>Conservation Easement</td></tr><tr><td style="text-align: center;"><img src="legend/TNCOwnedLandsinCalifornia_2_DeedRestrictions1.png" /></td><td>Deed Restrictions</td></tr><tr><td style="text-align: center;"><img src="legend/TNCOwnedLandsinCalifornia_2_FeeOwnership2.png" /></td><td>Fee Ownership</td></tr><tr><td style="text-align: center;"><img src="legend/TNCOwnedLandsinCalifornia_2_3.png" /></td><td></td></tr></table>': layer_TNCOwnedLandsinCalifornia_2,'<img src="legend/TNCPrioritizationAreas_1.png" /> TNC Prioritization Areas': layer_TNCPrioritizationAreas_1,"OpenStreetMap": layer_OpenStreetMap_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
